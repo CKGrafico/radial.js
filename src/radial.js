@@ -1,20 +1,26 @@
 (function(g){
-	var radials = 0;
+	var options = {
+		// True if the first element is a button
+		button: false,
+		// Container dimensions
+		container: {
+			width: '100px',
+			height: '100px'
+		}
+	};
 	
-	var containerOptions = {
-		// Container
-		classList: 'radial-container',
-		width: '100px',
-		height: '100px'
+	var classes = {
+		container: 'radial__container',
+		button: 'radial__button',
+		item: 'radial__item',
 	};
 	
 	var el = {
-		classList: ' ',
+		className: ' ',
 		disabled: false,
 		href: null,
 		html: '',
 		target: '_blank',
-		show: true,
 		_alfa: 0,
 	};
 	
@@ -26,22 +32,25 @@
 			element.href = item.href;
 			element.target = item.target;
 		}
-		element.className = item.classList;
+		if(item.isButton) {
+			element.className = item.className + ' ' + classes.button;
+		}else{
+			element.className = item.className + ' ' + classes.item;
+		}
 		element.innerHTML = item.html;
 		element.style.position = 'absolute';
 		element.style.top = Math.round(item._top) + 'px';
 		element.style.left = Math.round(item._left) + 'px';
-		element.style.display = (item.show) ? 'block' : 'none';
 		
 		return element;
 	};
 	
 	var createContainer = function(options) {
 		var container = document.createElement('div');
-		container.className = options.classList;
 		container.style.width = options.width;
 		container.style.height = options.height;
 		container.style.position = 'relative';
+		container.className = classes.container;
 		
 		return container;
 	};
@@ -69,9 +78,16 @@
 	};
 	
 	var getPosition = function(container, item) {
-		var r = radians(item._alfa);
 		var height = Math.round(parseInt(container.style.height)/2);
 		var width =  Math.round(parseInt(container.style.width)/2);
+		if(item._alfa === null) {
+			return {
+				top: height,
+				left: width
+			};
+		}
+		
+		var r = radians(item._alfa);
 		return {
 			top: height + Math.sin(r) * height,
 			left: width + Math.cos(r) * width
@@ -80,9 +96,9 @@
 	
 	// Class
 	var Radial = function(items, newOptions) {
-		radials++;
+		this.options = extendOpt(options, newOptions || {});
 		this._items = extendOptions(items);
-		this._container = createContainer(extendOpt(containerOptions, newOptions || {}));
+		this._container = createContainer(this.options.container);
 		this.calc();
 	};
 	
@@ -129,29 +145,28 @@
 			var count = this.count();
 			var alfa = 360/count;
 			var i = -alfa;
+			if(this.options.button) {
+				count = this.count()-1;
+				alfa = 360/count;
+				i = -alfa*2;
+			}
+			var count = (this.options.button) ? this.count()-1 : this.count();
+			var alfa = 360/count;
+			var i = -alfa;
 			for(var j = 0; j < count; j++) {
 				var newalfa = Math.round(i + alfa);
 				this._items[j]._alfa = newalfa;
 				i = newalfa;
 			}
-		},
-		
-		// Show all items
-		showAll: function(hide) {
-			for(var i = 0; i < this.count(); i++) {
-				this._items[i].show = !hide;
+			if(this.options.button) {
+				this._items[0]._alfa = null;
+				this._items[0].isButton = true;
 			}
-		},
-		
-		// Hide all items
-		hideAll: function() {
-			this.showAll(true);
 		},
 		
 		// Render radial menu
 		render: function() {
 			this._container.innerHTML = '';
-			
 			for(var i = 0; i < this.count(); i++) {
 				var calculated = getPosition(this._container, this._items[i]);
 				this._items[i]._top = calculated.top;
@@ -159,9 +174,7 @@
 				this._container.appendChild(template(this._items[i]));
 			}
 			return this._container;
-		},
-		
-		// Hide radial menu
+		}
 	};
 	
 	g.Radial = Radial;
