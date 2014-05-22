@@ -30,8 +30,8 @@
 		element.classList = item.classList;
 		element.innerHTML = item.html;
 		element.style.position = 'absolute';
-		element.style.top = item._top;
-		element.style.left = item._left;
+		element.style.top = Math.round(item._top) + 'px';
+		element.style.left = Math.round(item._left) + 'px';
 		element.style.display = (item.show) ? 'block' : 'none';
 		
 		return element;

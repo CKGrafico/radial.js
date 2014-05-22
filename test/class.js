@@ -97,7 +97,18 @@ describe('Showing items', function(){
 	});
 	
 	it('and all items have correct position respect container', function() {
-	
+		var nodes = result.childNodes;
+		expect(nodes[0].style.top).toEqual('50px');
+		expect(nodes[0].style.left).toEqual('100px');
+		
+		expect(nodes[1].style.top).toEqual('100px');
+		expect(nodes[1].style.left).toEqual('50px');
+		
+		expect(nodes[2].style.top).toEqual('50px');
+		expect(nodes[2].style.left).toEqual('0px');
+		
+		expect(nodes[3].style.top).toEqual('0px');
+		expect(nodes[3].style.left).toEqual('50px');
 	});
 	
 	it('and all items are visible', function(){
