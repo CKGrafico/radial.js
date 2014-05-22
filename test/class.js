@@ -21,9 +21,11 @@ describe('Pass some items to the constructor', function(){
 		expect(radial.get(0).target).toEqual('_blank');
 	});
 	
+	/* deprecated
 	it('and item can be rendered', function(){
-		expect(typeof radial.renderItem(0)).toEqual('string');
-	});
+		expect(typeof radial.renderItem(0)).toEqual('object');
+		expect(radial.renderItem(0).innerHTML).toEqual('testing');
+	});*/
 
 });
 
@@ -63,7 +65,6 @@ describe('Calculate positions', function(){
 	it('and 4 items paint a cross', function(){
 		expect(radial.count()).toEqual(4);
 		expect(radial.getAlfa(0)).toEqual(0);
-		radial.calc();
 		expect(radial.getAlfa(0)).toEqual(0);
 		expect(radial.getAlfa(1)).toEqual(90);
 		expect(radial.getAlfa(2)).toEqual(180);
@@ -74,7 +75,6 @@ describe('Calculate positions', function(){
 		var myItems2 = [{html: 5},{html: 6},{html: 7},{html: 8}];
 		radial.add(myItems2);
 		expect(radial.count()).toEqual(8);
-		radial.calc();
 		expect(radial.getAlfa(0)).toEqual(0);
 		expect(radial.getAlfa(1)).toEqual(45);
 		expect(radial.getAlfa(2)).toEqual(90);
@@ -86,7 +86,36 @@ describe('Calculate positions', function(){
 	});
 });
 
-/*describe('Showing items', function(){
-	it('and can show single item');
-	it('and can show all items');
-});*/
+describe('Showing items', function(){
+	var myItems = [{html: 1},{html: 2},{html: 3},{html: 4}];
+	var radial = new Radial(myItems);
+	var result = radial.render();
+	
+	it('and can show all items', function() {
+		expect(result.childNodes.length).toEqual(4);
+		expect(result.childNodes[0].innerHTML).toEqual('1');
+	});
+	
+	it('and all items have correct position respect container', function() {
+	
+	});
+	
+	it('and all items are visible', function(){
+		expect(result.childNodes.length).toEqual(4);
+		expect(result.childNodes[0].style.display).toEqual('block');
+		expect(result.childNodes[1].style.display).toEqual('block');
+		expect(result.childNodes[2].style.display).toEqual('block');
+		expect(result.childNodes[3].style.display).toEqual('block');
+	});
+	
+	it('and can show single item', function(){
+		radial.hideAll();
+		radial.get(3).show = true;
+		radial.render();
+		expect(result.childNodes.length).toEqual(4);
+		expect(result.childNodes[0].style.display).toEqual('none');
+		expect(result.childNodes[1].style.display).toEqual('none');
+		expect(result.childNodes[2].style.display).toEqual('none');
+		expect(result.childNodes[3].style.display).toEqual('block');
+	});
+});

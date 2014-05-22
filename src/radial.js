@@ -1,6 +1,12 @@
 (function(g){
-	var options = {
-		
+	var radials = 0;
+	
+	var containerOptions = {
+		// Container
+		classList: 'radial-container',
+		id: function() {return 'radial-' + radials},
+		width: '100px',
+		height: '100px'
 	};
 	
 	var el = {
@@ -9,19 +15,40 @@
 		href: null,
 		html: '',
 		target: '_blank',
-		_alfa: 0
+		show: true,
+		_alfa: 0,
 	};
 	
 	// Some functions
 	var template = function(item) {
+		var element = document.createElement('span');
 		if(item.href) {
-			return '<a href="' + item.href + '" target="' + item.target + '" class="' + item.classList + '">' + item.html + '</a>';
-		}else{
-			return '<span class="' + item.classList + '">' + item.html + '</span>';
+			element = document.createElement('a')
+			element.href = item.href;
+			element.target = item.target;
 		}
+		element.classList = item.classList;
+		element.innerHTML = item.html;
+		element.style.position = 'absolute';
+		element.style.top = item._top;
+		element.style.left = item._left;
+		element.style.display = (item.show) ? 'block' : 'none';
+		
+		return element;
 	};
 	
-	var extendEl = function(obj, source){
+	var createContainer = function(options) {
+		var container = document.createElement('div');
+		container.classList = options.classList;
+		container.id = options.id;
+		container.style.width = options.width;
+		container.style.height = options.height;
+		container.style.position = 'relative';
+		
+		return container;
+	};
+	
+	var extendOpt = function(obj, source){
 		var tObj = {};
 		for (var prop in obj) {
 			tObj[prop] = source[prop] || obj[prop];
@@ -33,23 +60,35 @@
 	var extendOptions = function(arr) {
 		var tArr = [];
 		for (var i = 0; i< arr.length; i++) {
-			tArr[i] = extendEl(el, arr[i]);
+			tArr[i] = extendOpt(el, arr[i]);
 		}
 		
 		return tArr;
 	};
 	
-	var Radial = function(items) {
+	var radians = function(degrees) {
+	  return degrees * Math.PI / 180;
+	};
+	
+	var getPosition = function(container, item) {
+		var r = radians(item._alfa);
+		var height = Math.round(parseInt(container.style.height)/2);
+		var width =  Math.round(parseInt(container.style.width)/2);
+		return {
+			top: height + Math.sin(r) * height,
+			left: width + Math.cos(r) * width
+		};
+	}
+	
+	// Class
+	var Radial = function(items, newOptions) {
+		radials++;
 		this._items = extendOptions(items);
+		this._container = createContainer(extendOpt(containerOptions, newOptions || {}));
+		this.calc();
 	};
 	
 	Radial.prototype = {
-		
-		// Render single item
-		renderItem: function(position) {
-			var item = this._items[position];
-			return template(item);
-		},
 		
 		// Get single item
 		get: function(index){
@@ -75,13 +114,16 @@
 			if(items.length) {
 				this._items = this._items.concat(extendOptions(items));
 			}else{
-				this._items.push(extendEl(el, items));
+				this._items.push(extendOpt(el, items));
 			}
+			
+			this.calc();
 		},
 		
 		// Remove an element
 		remove: function(index) {
 			this._items.splice(index,1);
+			this.calc();
 		},
 		
 		// Calc correct angle to each element
@@ -94,7 +136,34 @@
 				this._items[j]._alfa = newalfa;
 				i = newalfa;
 			}
-		}
+		},
+		
+		// Show all items
+		showAll: function(hide) {
+			for(var i = 0; i < this.count(); i++) {
+				this._items[i].show = !hide;
+			}
+		},
+		
+		// Hide all items
+		hideAll: function() {
+			this.showAll(true);
+		},
+		
+		// Render radial menu
+		render: function() {
+			this._container.innerHTML = '';
+			
+			for(var i = 0; i < this.count(); i++) {
+				var calculated = getPosition(this._container, this._items[i]);
+				this._items[i]._top = calculated.top;
+				this._items[i]._left = calculated.left;
+				this._container.appendChild(template(this._items[i]));
+			}
+			return this._container;
+		},
+		
+		// Hide radial menu
 	};
 	
 	g.Radial = Radial;
