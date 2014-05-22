@@ -111,22 +111,5 @@ describe('Showing items', function(){
 		expect(nodes[3].style.left).toEqual('50px');
 	});
 	
-	it('and all items are visible', function(){
-		expect(result.childNodes.length).toEqual(4);
-		expect(result.childNodes[0].style.display).toEqual('block');
-		expect(result.childNodes[1].style.display).toEqual('block');
-		expect(result.childNodes[2].style.display).toEqual('block');
-		expect(result.childNodes[3].style.display).toEqual('block');
-	});
 	
-	it('and can show single item', function(){
-		radial.hideAll();
-		radial.get(3).show = true;
-		radial.render();
-		expect(result.childNodes.length).toEqual(4);
-		expect(result.childNodes[0].style.display).toEqual('none');
-		expect(result.childNodes[1].style.display).toEqual('none');
-		expect(result.childNodes[2].style.display).toEqual('none');
-		expect(result.childNodes[3].style.display).toEqual('block');
-	});
 });
