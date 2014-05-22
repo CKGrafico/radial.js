@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<title>Radial.js Example</title>
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+		<style>
+			#menu1 {
+				position: absolute;
+				top: 40%;
+				left: 40%;
+				font-size: 19px;
+			}
+			
+			#menu2 {
+				position: absolute;
+				top: 20%;
+				left: 20%;
+				font-size: 19px;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="menu1"></div>
+		<div id="menu2"></div>
+		<script src="../src/radial.js"></script>
+		<script>
+			(function(){
+				var menu = document.getElementById('menu1');
+				var items = [
+					{classList: 'glyphicon glyphicon-move'},
+					{classList: 'glyphicon glyphicon-edit'},
+					{classList: 'glyphicon glyphicon-check'},
+					{classList: 'glyphicon glyphicon-share'},
+				];
+
+				var radial = new Radial(items);
+				menu.appendChild(radial.render());
+				
+				
+				menu = document.getElementById('menu2');
+				var items = [
+					{classList: 'glyphicon glyphicon-move'},
+					{classList: 'glyphicon glyphicon-edit'},
+					{classList: 'glyphicon glyphicon-check'},
+					{classList: 'glyphicon glyphicon-share'},
+					{classList: 'glyphicon glyphicon-cloud-download'},
+					{classList: 'glyphicon glyphicon-shopping-cart'},
+					{classList: 'glyphicon glyphicon-folder-open'},
+					{classList: 'glyphicon glyphicon-transfer'},
+				];
+
+				radial = new Radial(items);
+				menu.appendChild(radial.render());
+			})();
+		</script>
+	</body>
+</html>

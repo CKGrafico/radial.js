@@ -4,7 +4,6 @@
 	var containerOptions = {
 		// Container
 		classList: 'radial-container',
-		id: function() {return 'radial-' + radials},
 		width: '100px',
 		height: '100px'
 	};
@@ -27,7 +26,7 @@
 			element.href = item.href;
 			element.target = item.target;
 		}
-		element.classList = item.classList;
+		element.className = item.classList;
 		element.innerHTML = item.html;
 		element.style.position = 'absolute';
 		element.style.top = Math.round(item._top) + 'px';
@@ -39,8 +38,7 @@
 	
 	var createContainer = function(options) {
 		var container = document.createElement('div');
-		container.classList = options.classList;
-		container.id = options.id;
+		container.className = options.classList;
 		container.style.width = options.width;
 		container.style.height = options.height;
 		container.style.position = 'relative';
