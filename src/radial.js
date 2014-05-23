@@ -142,14 +142,14 @@
 		
 		// Calc correct angle to each element
 		calc: function() {
-			var count = this.count();
+			/*var count = this.count();
 			var alfa = 360/count;
 			var i = -alfa;
 			if(this.options.button) {
 				count = this.count()-1;
 				alfa = 360/count;
-				i = -alfa*2;
-			}
+			
+			}*/
 			var count = (this.options.button) ? this.count()-1 : this.count();
 			var alfa = 360/count;
 			var i = -alfa;
