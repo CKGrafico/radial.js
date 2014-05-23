@@ -20,12 +20,6 @@ describe('Pass some items to the constructor', function(){
 		expect(myItems[0].target).toBeUndefined();
 		expect(radial.get(0).target).toEqual('_blank');
 	});
-	
-	/* deprecated
-	it('and item can be rendered', function(){
-		expect(typeof radial.renderItem(0)).toEqual('object');
-		expect(radial.renderItem(0).innerHTML).toEqual('testing');
-	});*/
 
 });
 
@@ -112,4 +106,19 @@ describe('Showing items', function(){
 	});
 	
 	
+});
+
+describe('Radial is configurable', function(){
+	var myItems = [{html: 1},{html: 2},{html: 3},{html: 4}];
+	
+	it('and the first element can be a button', function() {
+		var radial = new Radial(myItems, {button: true});
+		var result = radial.render();
+		expect(result.childNodes[0].className.search('radial__button')).toBeGreaterThan(-1);
+	});
+	
+	it('and Radial can be a semisphere', function(){
+		var radial = new Radial(myItems, {deg: 180});
+		expect(radial.getAlfa(radial.length()-1)).toEqual(180 - 180/myItems.length);
+	});
 });
