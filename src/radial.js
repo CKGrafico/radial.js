@@ -4,6 +4,8 @@
 		button: false,
 		// 360 degrees = circle
 		deg: 360,
+		// left to right = +180
+		direction: 180,
 		// Container dimensions
 		container: {
 			width: '100px',
@@ -60,7 +62,7 @@
 	var extendOpt = function(obj, source){
 		var tObj = {};
 		for (var prop in obj) {
-			tObj[prop] = source[prop] || obj[prop];
+			tObj[prop] = (source[prop] !== undefined) ? source[prop] : obj[prop];
 		}
 		
 		return tObj;
@@ -79,7 +81,7 @@
 	  return degrees * Math.PI / 180;
 	};
 	
-	var getPosition = function(container, item) {
+	var getPosition = function(container, item, direction) {
 		var height = Math.round(parseInt(container.style.height)/2);
 		var width =  Math.round(parseInt(container.style.width)/2);
 		if(item._alfa === null) {
@@ -89,7 +91,7 @@
 			};
 		}
 		
-		var r = radians(item._alfa);
+		var r = radians(item._alfa + direction);
 		return {
 			top: height + Math.sin(r) * height,
 			left: width + Math.cos(r) * width
@@ -172,7 +174,7 @@
 		render: function() {
 			this._container.innerHTML = '';
 			for(var i = 0; i < this.count(); i++) {
-				var calculated = getPosition(this._container, this._items[i]);
+				var calculated = getPosition(this._container, this._items[i], this.options.direction);
 				this._items[i]._top = calculated.top;
 				this._items[i]._left = calculated.left;
 				this._container.appendChild(template(this._items[i]));

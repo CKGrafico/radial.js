@@ -82,7 +82,7 @@ describe('Calculate positions', function(){
 
 describe('Showing items', function(){
 	var myItems = [{html: 1},{html: 2},{html: 3},{html: 4}];
-	var radial = new Radial(myItems);
+	var radial = new Radial(myItems, {direction: 0});
 	var result = radial.render();
 	
 	it('and can show all items', function() {
