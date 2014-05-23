@@ -150,17 +150,22 @@
 		// Calc correct angle to each element
 		calc: function() {
 			var count = (this.options.button) ? this.count()-1 : this.count();
-			var alfa = this.options.deg/count;
+			var alfa = (this.options.deg > 359) ? 360/count : this.options.deg/(count-1);
 			var i = -alfa;
-			for(var j = 0; j < count; j++) {
-				var newalfa = Math.round(i + alfa);
-				this._items[j]._alfa = newalfa;
-				i = newalfa;
-			}
+			var j = 0;
 			if(this.options.button) {
 				this._items[0]._alfa = null;
 				this._items[0].isButton = true;
+				j++;
+				count++;
 			}
+			for(j; j < count; j++) {
+				var newalfa = Math.round(i + alfa);
+				console.log(newalfa + ' ' +j);
+				this._items[j]._alfa = newalfa;
+				i = newalfa;
+			}
+			
 		},
 		
 		// Render radial menu

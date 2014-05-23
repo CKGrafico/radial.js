@@ -117,8 +117,8 @@ describe('Radial is configurable', function(){
 		expect(result.childNodes[0].className.search('radial__button')).toBeGreaterThan(-1);
 	});
 	
-	it('and Radial can be a semisphere', function(){
+	it('and Radial can be a semicircle', function(){
 		var radial = new Radial(myItems, {deg: 180});
-		expect(radial.getAlfa(radial.length()-1)).toEqual(180 - 180/myItems.length);
+		expect(radial.getAlfa(radial.length()-1)).toEqual(180);
 	});
 });
