@@ -2,6 +2,8 @@
 	var options = {
 		// True if the first element is a button
 		button: false,
+		// 360 degrees = circle
+		deg: 360,
 		// Container dimensions
 		container: {
 			width: '100px',
@@ -106,7 +108,12 @@
 		
 		// Get single item
 		get: function(index){
-			return this._items[index];
+			return (index > -1) ? this._items[index] : this._items;
+		},
+		
+		// Return items length
+		length: function() {
+			return this._items.length;
 		},
 		
 		// Get alfa of an item
@@ -142,16 +149,8 @@
 		
 		// Calc correct angle to each element
 		calc: function() {
-			/*var count = this.count();
-			var alfa = 360/count;
-			var i = -alfa;
-			if(this.options.button) {
-				count = this.count()-1;
-				alfa = 360/count;
-			
-			}*/
 			var count = (this.options.button) ? this.count()-1 : this.count();
-			var alfa = 360/count;
+			var alfa = this.options.deg/count;
 			var i = -alfa;
 			for(var j = 0; j < count; j++) {
 				var newalfa = Math.round(i + alfa);
