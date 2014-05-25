@@ -35,7 +35,7 @@ var options = {
 	};
 ```
 
-###Radial item options
+###Radial item options (default options)
 ```
 var el = {
 		// List of classes to an element
@@ -46,6 +46,8 @@ var el = {
 		html: '',
 		// Link target (only if you use href)
 		target: '_blank',
+		// Zindex for this element
+		index: 0
 	};
 ```
 
