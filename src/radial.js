@@ -25,6 +25,7 @@
 		href: null,
 		html: '',
 		target: '_blank',
+		index: 0,
 		_alfa: 0,
 	};
 	
@@ -45,6 +46,7 @@
 		element.style.position = 'absolute';
 		element.style.top = Math.round(item._top) + 'px';
 		element.style.left = Math.round(item._left) + 'px';
+		element.style.zIndex = item.index;
 		
 		return element;
 	};
