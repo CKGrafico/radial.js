@@ -115,11 +115,6 @@
 			return (index > -1) ? this._items[index] : this._items;
 		},
 		
-		// Return items length
-		length: function() {
-			return this._items.length;
-		},
-		
 		// Get alfa of an item
 		getAlfa: function(item) {
 			if(typeof item === 'number') {
