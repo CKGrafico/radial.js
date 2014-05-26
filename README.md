@@ -35,7 +35,7 @@ var options = {
 	};
 ```
 
-###Radial item options
+###Radial item options (default options)
 ```
 var el = {
 		// List of classes to an element
@@ -46,6 +46,8 @@ var el = {
 		html: '',
 		// Link target (only if you use href)
 		target: '_blank',
+		// Zindex for this element
+		index: 0
 	};
 ```
 
@@ -78,4 +80,5 @@ document.getElementById('menu').appendChild(radial.render());
 ####Result
 ![Alt text](http://i.imgur.com/yUnwOPv.png "Radial example")
 
-##More info in [demo page](ckgrafico.github.io/radial.js) 
+##Play on CodePen [demo + controls](http://codepen.io/CKGrafico/pen/uFogw)
+##More info in [demo page](http://ckgrafico.github.io/radial.js) 

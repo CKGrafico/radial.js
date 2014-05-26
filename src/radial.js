@@ -165,7 +165,6 @@
 			}
 			for(j; j < count; j++) {
 				var newalfa = Math.round(i + alfa);
-				console.log(newalfa + ' ' +j);
 				this._items[j]._alfa = newalfa;
 				i = newalfa;
 			}
@@ -182,6 +181,33 @@
 				this._container.appendChild(template(this._items[i]));
 			}
 			return this._container;
+		},
+		
+		// Show animation, be free to override 'show function'
+		show: function() {
+			var childs = this._container.getElementsByClassName(classes.item);
+			for(var i = 0; i < childs.length; i++) {
+				childs[i].classList.add("show");
+			}
+		},
+		
+		// Hide animation, be free to override 'hide function'
+		hide: function() {
+			var childs = this._container.getElementsByClassName(classes.item);
+			for(var i = 0; i < childs.length; i++) {
+				childs[i].classList.remove("show");
+			}
+		},
+		
+		// Toggle show - hide
+		toggle: function() {
+			if(this.visible) {
+				this.hide();
+				this.visible = false;
+			}else{
+				this.show();
+				this.visible = true;
+			}
 		}
 	};
 	
