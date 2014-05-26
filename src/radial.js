@@ -110,17 +110,20 @@
 	
 	Radial.prototype = {
 		
-		// Get single item
+		/**
+		* Get single item
+		* @param {Number} index
+		* @return {Object} item
+		*/
 		get: function(index){
 			return (index > -1) ? this._items[index] : this._items;
 		},
 		
-		// Return items length
-		length: function() {
-			return this._items.length;
-		},
-		
-		// Get alfa of an item
+		/**
+		* Get alfa of an item
+		* @param {Object} / {Number} item
+		* @return {Number} alfa
+		*/
 		getAlfa: function(item) {
 			if(typeof item === 'number') {
 				item = this.get(item);
@@ -129,12 +132,19 @@
 			return item._alfa;
 		},
 		
-		// Items length
+		/**
+		* Get Items length
+		* @return {Number} length
+		*/
 		count: function(){
 			return this._items.length;
 		},
 		
-		// Add new Items to the list
+		/**
+		* Add new Items to the list
+		* @param {Array} items
+		* @return void
+		*/
 		add: function(items) {
 			if(items.length) {
 				this._items = this._items.concat(extendOptions(items));
@@ -145,13 +155,20 @@
 			this.calc();
 		},
 		
-		// Remove an element
+		/**
+		* Remove item from list
+		* @param {Number} index
+		* @return void
+		*/
 		remove: function(index) {
 			this._items.splice(index,1);
 			this.calc();
 		},
 		
-		// Calc correct angle to each element
+		/**
+		* Calc correct angle to each element
+		* @return void
+		*/
 		calc: function() {
 			var count = (this.options.button) ? this.count()-1 : this.count();
 			var alfa = (this.options.deg > 359) ? 360/count : this.options.deg/(count-1);
@@ -171,7 +188,10 @@
 			
 		},
 		
-		// Render radial menu
+		/**
+		* Render radial menu
+		* @return {DOMElement} container
+		*/
 		render: function() {
 			this._container.innerHTML = '';
 			for(var i = 0; i < this.count(); i++) {
@@ -183,23 +203,32 @@
 			return this._container;
 		},
 		
-		// Show animation, be free to override 'show function'
+		/**
+		* Show animation, be free to override 'show function'
+		* @return void
+		*/
 		show: function() {
 			var childs = this._container.getElementsByClassName(classes.item);
 			for(var i = 0; i < childs.length; i++) {
 				childs[i].classList.add("show");
 			}
 		},
-		
-		// Hide animation, be free to override 'hide function'
+
+		/**
+		* Hide animation, be free to override 'hide function'
+		* @return void
+		*/
 		hide: function() {
 			var childs = this._container.getElementsByClassName(classes.item);
 			for(var i = 0; i < childs.length; i++) {
 				childs[i].classList.remove("show");
 			}
 		},
-		
-		// Toggle show - hide
+
+		/**
+		* Toggle between show and hide state
+		* @return void
+		*/
 		toggle: function() {
 			if(this.visible) {
 				this.hide();
