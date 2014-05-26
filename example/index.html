@@ -52,12 +52,15 @@
 	</head>
 	
 	<body>
-		<div id="menu1"></div>
 		<div id="menu2"></div>
 		<script src="../src/radial.js"></script>
-		<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script>
 			(function(){
+				
+				// My container
+				var menu = document.getElementById('menu2');
+				
+				// Items list, in this case first element is the button
 				var items = [
 					{className: 'glyphicon glyphicon-plus'},
 					{className: 'glyphicon glyphicon-move'},
@@ -70,7 +73,7 @@
 					{className: 'glyphicon glyphicon-transfer'}
 				];
 
-				
+				// Radial options
 				var options = {
 					button: true,
 					container: {
@@ -78,13 +81,16 @@
 						width: '200px'
 					}
 				};
-				radial = new Radial(items, options);
-				$('#menu2').append(radial.render());
 				
-				// button
-				var $button = $('#menu2 .radial__button');
-				$button.on('click', function(){
-					$('#menu2 .radial__item').toggleClass('show');
+				// Create new Radial object
+				var radial = new Radial(items, options);
+				
+				// Append radial to the container
+				menu.appendChild(radial.render());
+				
+				// On click on the button, toggle menu
+				menu.addEventListener('click', function(){
+					radial.toggle();
 				});
 				
 			})();
