@@ -50,7 +50,73 @@ var el = {
 		index: 0
 	};
 ```
+###Methods
+```
+/**
+* Get single item
+* @param {Number} index
+* @return {Object} item
+*/
+get: function(index){...}
 
+/**
+* Get alfa of an item
+* @param {Object} / {Number} item
+* @return {Number} alfa
+*/
+getAlfa: function(item) {...}
+
+/**
+* Get Items length
+* @return {Number} length
+*/
+count: function(){...}
+
+/**
+* Add new Items to the list
+* @param {Array} items
+* @return void
+*/
+add: function(items) {...}
+
+/**
+* Remove item from list
+* @param {Number} index
+* @return void
+*/
+remove: function(index) {...}
+
+/**
+* Calc correct angle to each element
+* @return void
+*/
+calc: function() {...}
+
+/**
+* Render radial menu
+* @return {DOMElement} container
+*/
+render: function() {...}
+
+/**
+* Show animation, be free to override 'show function'
+* @return void
+*/
+show: function() {...}
+
+/**
+* Hide animation, be free to override 'hide function'
+* @return void
+*/
+hide: function() {...}
+
+/**
+* Toggle between show and hide state
+* @return void
+*/
+toggle: function() {...}
+
+```
 ###Example of use
 ```
 var items = [
