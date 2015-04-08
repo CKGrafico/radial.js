@@ -147,4 +147,4 @@ document.getElementById('menu').appendChild(radial.render());
 ![Alt text](http://i.imgur.com/yUnwOPv.png "Radial example")
 
 ##Play on CodePen [demo + controls](http://codepen.io/CKGrafico/pen/uFogw)
-##More info [radial.js.org](radial.js.org)
+##More info [radial.js.org](http://radial.js.org)
