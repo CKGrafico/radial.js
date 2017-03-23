@@ -2,6 +2,7 @@ JavaScript library to make Radial menus.. or anything..
 ========
 
 With this library you can create a list of items, with different properties and transform it in a circle.
+
 ###Examples of items
 ```
 var items = [
