@@ -101,12 +101,23 @@
 	}
 	
 	// Class
-	var Radial = function(items, newOptions) {
+	var Radial = function(items, newOptions, degrees) {
 		this.options = extendOpt(options, newOptions || {});
 		this._items = extendOptions(items);
+		if(!(degrees===undefined)){ //if it is NOT undefined
+			for(var i = 0; i<this._items.length; i++){
+				if(!(degrees[i]===undefined)){
+					this._items[i]._alfa = degrees[i];
+				}
+				else{
+					this._items[i]._alfa = 0;
+				}
+			}
+		}
 		this._container = createContainer(this.options.container);
 		this.calc();
 	};
+	
 	
 	Radial.prototype = {
 		
@@ -171,7 +182,28 @@
 		*/
 		calc: function() {
 			var count = (this.options.button) ? this.count()-1 : this.count();
-			var alfa = (this.options.deg > 359) ? 360/count : this.options.deg/(count-1);
+			var newcount = count;
+			var anglesaccountedfor = 0;
+			for(var k = 0; k<this._items.length; k++){
+				anglesaccountedfor += this._items[k]._alfa;
+				if(this._items[k]._alfa != 0 && this.options.button){
+					newcount--;
+				}
+			}
+			if((anglesaccountedfor > this.options.deg) || (anglesaccountedfor > 360)){
+				for(var k = 0; k<this._items.length; k++){
+					this._items[k]._alfa = 0; //if the angles don't add up then reset all values to default
+					anglesaccountedfor = 0;
+					newcount = count;
+				}
+			}
+			var alfa = 0;
+			if(newcount != 0){
+				alfa = (this.options.deg > 359) ? (360-anglesaccountedfor)/newcount : (this.options.deg-anglesaccountedfor)/(newcount-1);
+			}
+			else{
+				alfa = (this.options.deg > 359) ? (360-anglesaccountedfor)/count : (this.options.deg-anglesaccountedfor)/(count-1);
+			}
 			var i = -alfa;
 			var j = 0;
 			if(this.options.button) {
@@ -180,9 +212,15 @@
 				j++;
 				count++;
 			}
-			for(j; j < count; j++) {
-				var newalfa = Math.round(i + alfa);
-				this._items[j]._alfa = newalfa;
+			for(j; j < this._items.length; j++) {
+				if(newcount != 0){
+					var newalfa = (this._items[j]._alfa == 0) ? Math.round(i + alfa) : Math.round(i + this._items[j]._alfa);
+					this._items[j]._alfa = newalfa;
+				}
+				else{
+					var newalfa = Math.round(i + alfa);
+					this._items[j]._alfa += newalfa;
+				}
 				i = newalfa;
 			}
 			
