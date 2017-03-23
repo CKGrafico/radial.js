@@ -20,8 +20,10 @@ var items = [
 ```
 
 You can also add custom angles. 0 will lead to the default angle
+
 ###[Codepen of custom angles](http://codepen.io/SemicolonExpected/pen/RpyLQx)
-###Example of degrees
+
+###Example of angles
 ```
 var degrees = [
 	10,
