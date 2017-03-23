@@ -2,6 +2,7 @@ JavaScript library to make Radial menus.. or anything..
 ========
 
 With this library you can create a list of items, with different properties and transform it in a circle.
+
 ###Examples of items
 ```
 var items = [
@@ -18,6 +19,30 @@ var items = [
 	{className: 'icon icon-c', html: 3}
 ];
 ```
+
+You can also add custom angles. 0 will lead to the default angle
+
+###[Codepen of custom angles](http://codepen.io/SemicolonExpected/pen/RpyLQx)
+
+###Example of angles
+```
+var degrees = [
+	10,
+	10,
+	10
+];
+```
+You do not need to specify degrees for all nodes, but because each item directly corresponds to each degree, items[0] is degrees[0] degrees, if the nodes you want to be defaulted aren't the last nodes, you will need to declare that index as 0. So if you have 6 items, and you want to make only item 3 and 4 a custom angle, you would need to declare it like so or else it would change the first and second item to 10 degrees:
+```
+var degrees = [
+	0,
+	0,
+	10,
+	10
+];
+```
+Also be aware that if you have a button as one of your nodes, that the first index does not count and you would need to put your custom value starting in the second index (degrees[1]) in this case as long as it is a number, you can put anything in degrees[0] but it is best practice to use 0.
+
 ###Radial default options
 ```
 var options = {
